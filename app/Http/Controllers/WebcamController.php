@@ -1,10 +1,12 @@
 <?php
-    
+
 namespace App\Http\Controllers;
-    
+
+use App\Models\Person;
 use Illuminate\Http\Request;
-use Storage;
-  
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
+
 class WebcamController extends Controller
 {
     /**
@@ -16,28 +18,11 @@ class WebcamController extends Controller
     {
         return view('user.testwebcam');
     }
-  
+
     /**
      * Write code on Method
      *
      * @return response()
      */
-    public function store(Request $request)
-    {
-        $img = $request->image;
-        $folderPath = "uploads/";
-        
-        $image_parts = explode(";base64,", $img);
-        $image_type_aux = explode("image/", $image_parts[0]);
-        $image_type = $image_type_aux[1];
-        
-        $image_base64 = base64_decode($image_parts[1]);
-        $fileName = uniqid() . '.png';
-        
-        $file = $folderPath . $fileName;
-        Storage::put($file, $image_base64);
-        // untuk lihat gambar, cek peminjaman-ijazah-main/storage/app/uploads
-        
-        dd('Image uploaded successfully: '.$fileName);
-    }
+    
 }

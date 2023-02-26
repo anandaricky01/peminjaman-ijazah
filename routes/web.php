@@ -46,20 +46,9 @@ Route::get('/master', [MasterController::class, 'index']);
 Route::post('/master', [MasterController::class, 'checkNim']);
 Route::post('/second', [MasterController::class, 'secondPage']);
 Route::post('/third', [MasterController::class, 'dataPeminjam']);
-Route::post('/tri', [MasterController::class, 'liatFoto']);
 
-// Route::get('/masterr', function () {
-//     return view('masterr');
-// });
-
-
-//  Route::get('/second', function () {
-//     return view('user.second');
-// });
-
-// Route::get('/tri', function () {
-//     return view('user.tri');
-// });
+// store photo peminjam
+Route::post('webcam', [MasterController::class, 'store'])->name('webcam.capture');
 
 Route::get('/insert-sql', [MahasiswaController::class,'insertSql']);
 
@@ -67,4 +56,3 @@ Route::get('/user.master', [MahasiswaController::class,'getView']);
 
 
 Route::get('webcam', [WebcamController::class, 'index']);
-Route::post('webcam', [WebcamController::class, 'store'])->name('webcam.capture');

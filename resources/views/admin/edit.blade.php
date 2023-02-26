@@ -97,7 +97,7 @@
                         </div>
                         <div class="form-group">
                             <div class="d-flex justify-content-center">
-                                <img src="{{ Storage::url('public/image/' . $student->person->image) }}"
+                                <img src="{{ Storage::url('uploads/images/' . $student->person->image) }}"
                                     style="max-height: 500px">
                             </div>
                             <label for="image">Upload File</label>
