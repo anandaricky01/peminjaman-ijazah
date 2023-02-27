@@ -100,11 +100,11 @@ class StudentController extends Controller
         // return redirect('/student');
     }
 
-    public function update($id, StudentCreateRequest $request)
+    // public function update($id, StudentCreateRequest $request)
+    public function update($id, Request $request)
     {
         try {
             $student = Student::findOrFail($id);
-
             if ($request->has('image')) {
                 if (Storage::disk('local')->exists('public/uploads/images/' . $student->image)) {
                     Storage::delete('public/uploads/images/' . $student->image);
