@@ -41,13 +41,8 @@ class StudentController extends Controller
     {
         if ($request->has('image')) {
             $image = $request->file('image');
-            $folderPath = "public/uploads/images/";
-            $image_parts = explode(";base64,", $image);
-
-            $image_base64 = base64_decode($image_parts[1]);
             $image_name = time() . '.jpg';
-            $file = $folderPath . $image_name;
-            Storage::put($file, $image_base64);
+            Storage::putFileAs('public/uploads/images/', $image, $image_name);
 
             $person = Person::create([
                 'nama_peminjam' => $request->nama_peminjam,
@@ -111,13 +106,13 @@ class StudentController extends Controller
             $student = Student::findOrFail($id);
 
             if ($request->has('image')) {
-                if (Storage::disk('local')->exists('public/image/' . $student->image)) {
-                    Storage::delete('public/image/' . $student->image);
+                if (Storage::disk('local')->exists('public/uploads/images/' . $student->image)) {
+                    Storage::delete('public/uploads/images/' . $student->image);
                 }
 
                 $image = $request->file('image');
                 $image_name = time() . '.jpg';
-                Storage::putFileAs('public/image/', $image, $image_name);
+                Storage::putFileAs('public/uploads/images/', $image, $image_name);
                 Student::where('id', $student->id)
                     ->update([
                         'id_fakultas'   => $request->id_fakultas,

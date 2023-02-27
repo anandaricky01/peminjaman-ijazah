@@ -19,12 +19,12 @@
                         <div class="form-group">
                             <label for="exampleInputNIM1">NIM</label>
                             <input type="text" class="form-control" name="nim" id="exampleInputNIM1" placeholder="NIM"
-                                value="">
+                                value="{{ old('nim') }}">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputName1">Nama</label>
                             <input type="text" class="form-control" name="nama" id="exampleInputName1" placeholder="Nama"
-                                value="" required>
+                                value="{{ old('nama') }}" required>
                         </div>
                         <div class="form-group">
                             <label>Fakultas</label>
@@ -57,15 +57,15 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputCity1">Alamat</label>
-                            <input type="text" class="form-control" name="alamat" id="exampleInputCity1" placeholder="Alamat" required>
+                            <input type="text" class="form-control" name="alamat" id="exampleInputCity1" placeholder="Alamat" required value="{{ old('alamat') }}">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputName1">Nama Peminjam</label>
-                            <input type="text" class="form-control" name="nama_peminjam" id="exampleInputName1" placeholder="Nama Peminjam" required>
+                            <input type="text" class="form-control" name="nama_peminjam" id="exampleInputName1" placeholder="Nama Peminjam" required value="{{ old('nama_peminjam') }}">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputNomor2">Nomor Telepon Peminjam</label>
-                            <input type="text" class="form-control" name="no_telp" id="exampleInputNomor2" placeholder="Nomor Telepon Peminjam" required>
+                            <input type="text" class="form-control" name="no_telp" id="exampleInputNomor2" placeholder="Nomor Telepon Peminjam" required value="{{ old('no_telp') }}">
                         </div>
                         <div class="form-group">
                             <label>Hubungan</label>
@@ -81,11 +81,11 @@
                         </div>
                         <div class="form-group">
                             <label class="col-form-label" required>Tanggal Pinjam</label>
-                            <input type="date" class="form-control" name="tgl_pinjam"/>
+                            <input type="date" class="form-control" name="tgl_pinjam" value="{{ old('tgl_pinjam') }}"/>
                         </div>
                         <div class="form-group">
                             <label class="col-form-label" required>Tanggal Kembali</label>
-                            <input class="form-control" type="date" name="tgl_kembali"/>
+                            <input class="form-control" type="date" name="tgl_kembali" value="{{ old('tgl_kembali') }}"/>
                         </div>
                         <div class="form-group">
                             <label for="image">Upload File</label>
@@ -130,7 +130,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleTextarea1">Keterangan</label>
-                            <textarea class="form-control" name="ket" id="exampleTextarea1" rows="4"></textarea>
+                            <textarea class="form-control" name="ket" id="exampleTextarea1" rows="4">{{ old('ket') }}</textarea>
                         </div>
                         <button type="submit" class="btn btn-primary mr-2" href="student">Submit</button>
                         <button class="btn btn-light" href="student">Cancel</button>
