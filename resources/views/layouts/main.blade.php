@@ -30,6 +30,7 @@
     crossorigin="anonymous"
   />
   <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+  <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
   <div class="container-scroller">
@@ -111,7 +112,7 @@
               <img src="{{ asset("images/faces/user.png") }}" alt="profile"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item" href="logout">
+              <a class="dropdown-item" href="{{ route('logout') }}">
                 <i class="ti-power-off text-primary"></i>
                 Keluar
               </a>
@@ -149,7 +150,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="index">
+            <a class="nav-link" href="{{ route('dashboard') }}">
               <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -162,9 +163,18 @@
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="student">Student</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('dashboard.person.index') }}">Peminjam/Pengambil</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('dashboard.student.index') }}">Mahasiswa</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('dashboard.ijazah.index') }}">Ijazah</a></li>
               </ul>
             </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('riwayat-peminjaman') }}">
+              <i class="icon-grid menu-icon"></i>
+              <i data-feather="clock"></i>
+              <span class="menu-title">Riwayat Peminjaman</span>
+            </a>
           </li>
         </ul>
       </nav>
@@ -222,6 +232,9 @@
   <script src="{{ asset('js/select2.js') }}"></script>
   <script src="{{ asset('js/dashboard.js') }}"></script>
   <script src="{{ asset('js/Chart.roundedBarCharts.js') }}"></script>
+  <script>
+    feather.replace()
+  </script>
   <!-- End custom js for this page-->
 </body>
 

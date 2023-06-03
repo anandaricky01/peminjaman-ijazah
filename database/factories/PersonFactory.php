@@ -21,6 +21,7 @@ class PersonFactory extends Factory
     {
         return [
             'nama_peminjam' => $this -> faker->name(),
+            'student_id' => $this -> faker->numberBetween(1,10),
             'no_telp' => $this -> faker->phoneNumber(),
             'hubungan' => Arr::random(['Yang Bersangkutan', 'Anggota keluarga / Teman']),
             'status' => Arr::random(['Tervalidasi', 'Pending', 'Tidak Tervalidasi']),

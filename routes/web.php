@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\IjazahController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PersonController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\WebcamController;
 use App\Http\Controllers\Master\MasterController;
+use App\Http\Controllers\RiwayatPeminjamanController;
 use Illuminate\Http\Request;
 
 /*
@@ -19,33 +22,74 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return view('admin/login');
+// User Peminjaman & Pengambilan Routes
+Route::get('/', [MasterController::class, 'index'])->name('home');
+Route::post('/firstStepPost', [MasterController::class, 'firstStepPost'])->name('firstStepPost');
+
+// step kedua peminjaman
+Route::get('/second', [MasterController::class, 'secondPage'])->name('second');
+Route::post('/secondStepPost', [MasterController::class, 'secondStepPost'])->name('secondStepPost');
+
+// step ketiga peminjaman
+Route::get('/third', [MasterController::class, 'third'])->name('third');
+Route::post('/thirdStepPost', [MasterController::class, 'thirdStepPost'])->name('thirdStepPost');
+
+// selesai peminjaman
+Route::get('/selesai', [MasterController::class, 'selesai'])->name('selesai');
+
+// test route
+Route::post('/test', [MasterController::class, 'test'])->name('test');
+
+// session forget
+Route::get('/forget', function(Request $request){
+    $request->session()->flush();
+    echo "all tokens flushed";
 });
 
-Route::get('register', [RegisterController::class, 'index'])->name('index');
-Route::post('register', [RegisterController::class, 'register'])->name('register');
-Route::get('login', [LoginController::class, 'index'])->name('index');
-Route::post('login', [LoginController::class, 'login'])->name('login');
-Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('authenticate');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('index', [StudentController::class, 'dashboard']);
+Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function(){
+    Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-Route::get('student', [StudentController::class, 'index']);
-Route::get('student-add', [StudentController::class, 'create']);
-Route::post('students', [StudentController::class, 'store']);
-Route::get('student/{id}/edit', [StudentController::class, 'edit']);
-Route::put('student/{id}', [StudentController::class, 'update']);
-Route::delete('student/{id}', [StudentController::class, 'destroy']);
+    // control source person
+    Route::resource('/person', PersonController::class)
+        ->name('index', 'dashboard.person.index')
+        ->name('edit', 'dashboard.person.edit')
+        ->name('update', 'dashboard.person.update')
+        ->name('destroy', 'dashboard.person.delete');
+
+    Route::resource('/student', StudentController::class)
+        ->name('index', 'dashboard.student.index')
+        ->name('create', 'dashboard.student.create')
+        ->name('store', 'dashboard.student.store')
+        ->name('edit', 'dashboard.student.edit')
+        ->name('update', 'dashboard.student.update')
+        ->name('destroy', 'dashboard.student.delete');
+
+    Route::resource('/ijazah', IjazahController::class)
+        ->name('index', 'dashboard.ijazah.index')
+        ->name('create', 'dashboard.ijazah.create')
+        ->name('store', 'dashboard.ijazah.store')
+        ->name('edit', 'dashboard.ijazah.edit')
+        ->name('update', 'dashboard.ijazah.update')
+        ->name('destroy', 'dashboard.ijazah.delete');
+
+    Route::get('/riwayat-peminjaman', [RiwayatPeminjamanController::class, 'index'])->name('riwayat-peminjaman');
+    Route::get('/riwayat-peminjaman/{id}', [RiwayatPeminjamanController::class, 'show'])->name('riwayat-peminjaman.show');
+});
+
+// Route::get('student', [StudentController::class, 'index']);
+// Route::get('student-add', [StudentController::class, 'create']);
+// Route::post('students', [StudentController::class, 'store']);
+// Route::get('student/{id}/edit', [StudentController::class, 'edit']);
+// Route::put('student/{id}', [StudentController::class, 'update']);
+// Route::delete('student/{id}', [StudentController::class, 'destroy']);
 
 Route::get('main', function () {
     return view('admin/layouts/main');
 });
-
-Route::get('/master', [MasterController::class, 'index']);
-Route::post('/master', [MasterController::class, 'checkNim']);
-Route::post('/second', [MasterController::class, 'secondPage']);
-Route::post('/third', [MasterController::class, 'dataPeminjam']);
 
 // store photo peminjam
 Route::post('webcam', [MasterController::class, 'store'])->name('webcam.capture');

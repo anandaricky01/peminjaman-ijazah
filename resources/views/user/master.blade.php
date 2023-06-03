@@ -18,8 +18,7 @@
 
 <body>
     <div class="wrapper">
-        <form action="" method="post" id="wizard">
-            @csrf
+        <form action="{{ route('home') }}" method="" id="wizard">
             <!-- SECTION 1 -->
             <h2></h2>
             <section>
@@ -32,6 +31,11 @@
                             <h3>PEMINJAMAN IJAZAH</h3>
                         </div>
                         <p>Input Data Ijazah</p>
+                        @if (session()->has('danger'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <p style="color: red; margin-top:20px">{!! session('danger') !!}</p>
+                            </div>
+                        @endif
 
                         <div class="form-holder">
                             <button class="search-nim btn btn-primary" type="submit">Cek NIM</button>
@@ -39,16 +43,25 @@
 
                         <div class="form-row">
                             <div class="form-holder w-100">
-                                <input type="text" placeholder="Masukkan NIM" name="nim" class="form-control"
-                                    value="{{ $studentData->nim ?? '' }}">
+                                <input type="text" placeholder="Masukkan NIM" name="search" class="form-control"
+                                    value="{{ request('search') }}">
                             </div>
                         </div>
         </form>
 
 
-        <form action="/second" method="post" id="wizard">
+        <form action="{{ route('firstStepPost') }}" method="post" id="wizard">
             @csrf
+            <input type="hidden" name="student_id" value="{{ $studentData->id ?? '' }}">
             <input type="hidden" name="nim" value="{{ $studentData->nim ?? '' }}">
+            <div class="form-row">
+                <div class="form-holder w-100">
+                        <input type="text" placeholder="Nomor Ijazah" class="form-control" @disabled(true)
+                            value="{{ $studentData->ijazah->no_ijazah ?? 'Nomor Ijazah Tidak/Belum Tersedia' }}" name="no_ijazah">
+                </div>
+                {{-- hidden input untuk kirim data --}}
+                <input type="hidden" value="{{ $studentData->ijazah->no_ijazah ?? '' }}" name="no_ijazah">
+            </div>
             <div class="form-row">
                 <div class="form-holder">
                     <input type="text" placeholder="Nama" class="form-control" @disabled(true)
@@ -79,8 +92,9 @@
             </div>
 
             <br>
+
             <div class="form-group">
-                <button class="search-nim btn btn-primary" type="submit">Selanjutnya</button>
+                <button class="search-nim btn btn-primary" type="submit" {{ $studentData->ijazah->no_ijazah ?? 'disabled' }}>Selanjutnya</button>
                 {{-- <a class="next-step btn btn-primary font-size-h6" href="second">Selanjutnya</a> --}}
             </div>
     </div>

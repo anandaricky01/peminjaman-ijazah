@@ -44,7 +44,7 @@
                                     <p class="alert alert-danger">{{ $err }}</p>
                                 @endforeach
                             @endif
-                            <form class="pt-3"  form action="login" method="POST">
+                            <form class="pt-3"  form action="{{ route('authenticate') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <input type="username" class="form-control form-control-lg"
@@ -68,9 +68,9 @@
                                 <div class="mt-3">
                                     <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">MASUK</button>
                                 </div>
-                                <div class="text-center mt-4 font-weight-light">
+                                {{-- <div class="text-center mt-4 font-weight-light">
                                     Belum punya akun? <a href="register" class="text-primary">Daftar</a>
-                                </div>
+                                </div> --}}
                             </form>
                         </div>
                     </div>

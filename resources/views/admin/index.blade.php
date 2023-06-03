@@ -104,11 +104,12 @@
             <div class="card">
                 <div class="card-body">
                     <p class="card-title mb-0">Daftar Peminjam</p>
-                    <button id="export" class="btn btn-primary" onclick="exportTableToCSV('peminjaman-ijazah.csv')"><i
-                            class="fas fa-file-export"></i></button>
-                    <a href="student-add" id="plus" class="btn btn-primary">
+                    <button id="export" class="btn btn-primary" onclick="exportTableToCSV('peminjaman-ijazah.csv')">
+                        <i data-feather="printer" class="fas fa-plus"></i>
+                    </button>
+                    {{-- <a href="student-add" id="plus" class="btn btn-primary">
                         <i class="fas fa-plus"></i>
-                    </a>
+                    </a> --}}
                     <div class="table-responsive">
                         @if (Session::has('status'))
                             <div class="alert alert-success" role="alert">
@@ -118,11 +119,9 @@
                         <table id="table1" class="table table-striped table-borderless">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Id Peminjam</th>
-                                    <th>NIM</th>
                                     <th>Nama</th>
-                                    <th>Fakultas</th>
-                                    <th>Program Studi</th>
                                     <th>Status</th>
                                     <th>Tgl Pinjam</th>
                                     <th>Tgl Kembali</th>
@@ -130,24 +129,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($mahasiswa as $data)
+                                @foreach ($peminjam as $data)
                                     <tr>
                                         <td class="font-weight-bold">{{ $loop->iteration }}</td>
-                                        <td class="font-weight-bold">{{ $data->nim }}</td>
-                                        <td>{{ $data->nama }}</td>
-                                        <td>{{ $data->fakultas->fakultas }}</td>
-                                        <td>{{ $data->prodi->prodi }}</td>
+                                        <td class="font-weight-bold">{{ $data->id }}</td>
+                                        <td class="font-weight-bold">{{ $data->nama_peminjam }}</td>
                                         <td class="font-weight-light">
-                                            @if ($data->person->status == 'Tervalidasi')
+                                            @if ($data->status == 'Tervalidasi')
                                                 <div class="badge badge-success">Tervalidasi</div>
-                                            @elseif ($data->person->status == 'Pending')
+                                            @elseif ($data->status == 'Pending')
                                                 <div class="badge badge-warning">Pending</div>
                                             @else
                                                 <div class="badge badge-danger">Tidak Tervalidasi</div>
                                             @endif
                                         </td>
-                                        <td>{{ $data->person->tgl_pinjam }}</td>
-                                        <td>{{ $data->person->tgl_kembali }}</td>
+                                        <td>{{ $data->tgl_pinjam }}</td>
+                                        <td>{{ $data->tgl_kembali ?? '-' }}</td>
                                         <td>
                                             <a href="/student/{{ $data->id }}/edit" id="edit"
                                                 class="btn btn-warning">

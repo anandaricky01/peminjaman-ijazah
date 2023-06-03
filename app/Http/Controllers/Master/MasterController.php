@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ijazah;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Person;
@@ -11,48 +12,106 @@ use Illuminate\Support\Facades\Storage;
 
 class MasterController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $studentData = '';
-        return view('user.master', compact('studentData'));
+        try {
+            //code...
+            if(isset($request->search)){
+                $studentData = Student::filterNim($request->only('search'))->get()[0];
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('home')->with('danger', 'Data Mahasiswa Tidak ditemukan!');
+        }
+
+        return view('user.master', [
+            'studentData' => $studentData
+        ]);
+    }
+
+    public function firstStepPost(Request $request){
+
+        // validasi data terlebih dahulu
+        $validated = $request->validate([
+            'nim' => 'required',
+            'nama' => 'required',
+            'alamat' => 'required',
+            'fakultas' => 'required',
+            'prodi' => 'required',
+            'student_id' => 'required',
+            'no_ijazah' => 'required',
+        ]);
+
+        $checkIjazah = Ijazah::where('no_ijazah', $validated['no_ijazah'])->get()[0];
+        if($checkIjazah->status_ijazah == 'unavailable'){
+            return redirect()->back()->with('danger', 'Ijazah sedang tidak tersedia/dipinjam/sudah diambil. Silahkan hubungi admin!<br>081234567890');
+        }
+
+        // simpan data mahasiswa dalam session dengan key 'data'
+        $request->session()->put('data', $validated);
+
+        // redirect ke halaman ke dua
+        return redirect()->route('second');
     }
 
     public function secondPage(Request $request)
     {
-        $request->session()->put('nim', $request['nim']);
-        $request->session()->put('nama', $request['nama']);
-        $request->session()->put('alamat', $request['alamat']);
-        $request->session()->put('fakultas', $request['fakultas']);
-        $request->session()->put('prodi', $request['prodi']);
+        if(empty($request->session()->get('data'))){
+            return redirect()->route('home')->with('danger', 'Cari NIM Mahasiswa dahulu!');
+        }
+
         return view('user.second');
     }
 
-    public function checkNim(Request $request)
-    {
-        $studentData = Student::where('nim', $request->nim)->first();
-        return view('user.master', compact('studentData'));
+    public function secondStepPost(Request $request){
+
+        // validasi data terlebih dahulu
+        $validated = $request->validate([
+            'nama_peminjam' => 'required',
+            'no_telp' => 'required',
+            'hubungan' => 'required',
+            'keperluan' => 'required',
+        ]);
+
+        // check apakah surat kuasa dicentang
+        if(isset($request->surat_kuasa)){
+            $validated['surat_kuasa'] = 1;
+        } else {
+            $validated['surat_kuasa'] = 0;
+        }
+
+        // ambil data dari session
+        $data = $request->session()->get('data');
+
+        // masukan data peminjam ke dalam variabel data
+        foreach ($validated as $key => $dataPeminjam) {
+            $data[$key] = $dataPeminjam;
+        }
+
+        // simpan data yang telah diupdate dalam session dengan key 'data'
+        $request->session()->put('data', $data);
+
+        // redirect ke halaman ke ketiga
+        return redirect()->route('third');
     }
 
-    public function afterCheckNIM(Request $request)
-    {
-        return view('user.second');
+    public function third(Request $request){
+        if(empty($request->session()->get('data'))){
+            return redirect()->route('home')->with('danger', 'Cari NIM Mahasiswa dahulu!');
+        }
+
+        return view('user.third');
     }
 
-    public function dataPeminjam(Request $request)
+    public function thirdStepPost(Request $request)
     {
-        $request->session()->put('nama_peminjam', $request['nama_peminjam']);
-        $request->session()->put('no_telp', $request['no_telp']);
-        $request->session()->put('hubungan', $request['hubungan']);
-        $request->session()->put('surat_kuasa', $request['surat_kuasa']);
-        return view('user.tri');
-    }
+        // data tersimpan dalam session dimasukan pada variabel $data
+        $data = $request->session()->get('data');
 
-    public function store(Request $request)
-    {
-        // $id_prodi = Prodi::where('prodi', request()->session()->get('prodi'))->first()->id;
-        // $id_fakultas = Fakultas::where('fakultas', request()->session()->get('fakultas'))->first()->id;
-        // dd($id_prodi);
+        // ambil data foto dari request
         $img = $request->image;
+
         $folderPath = "public/uploads/images/";
 
         $image_parts = explode(";base64,", $img);
@@ -64,21 +123,50 @@ class MasterController extends Controller
 
         $file = $folderPath . $fileName;
         Storage::put($file, $image_base64);
+
         // untuk lihat gambar, cek peminjaman-ijazah-main/storage/app/uploads
         $person = Person::create([
-            'nama_peminjam' => request()->session()->get('nama_peminjam'),
-            'no_telp' => request()->session()->get('no_telp'),
-            'hubungan' => request()->session()->get('hubungan'),
-            'surat_kuasa' => request()->session()->get('surat_kuasa'),
+            'student_id' => $data['student_id'],
+            'nama_peminjam' => $data['nama_peminjam'],
+            'no_telp' => $data['no_telp'],
+            'hubungan' => $data['hubungan'],
+            'surat_kuasa' => $data['surat_kuasa'],
             'tgl_pinjam' => Carbon::now()->format('Y-m-d'),
             'tgl_kembali' => NULL,
             'ket' => '',
-            'image' => $fileName,
-            'status' => 'Pending'
+            'image' => $file,
+            'status' => 'Pending',
+            'keperluan' => $data['keperluan'],
         ]);
 
-        Student::where('nim',request()->session()->get('nim'))->update(['id_person' => $person->id]);
+        // cata riwayat
+        app('App\Http\Controllers\RiwayatPeminjamanController')
+            ->catat_riwayat([
+                'nama_mahasiswa' => $data['nama'],
+                'nim' => $data['nim'],
+                'no_ijazah' => $data['no_ijazah'],
+                'nama_peminjam' => $data['nama_peminjam'],
+                'no_telp' => $data['no_telp'],
+                'hubungan' => $data['hubungan'],
+                'surat_kuasa' => $data['surat_kuasa'],
+                'tgl_pinjam' => Carbon::now()->format('Y-m-d'),
+                'tgl_kembali' => NULL,
+                'ket' => '',
+                'status' => 'Pending',
+                'keperluan' => $data['keperluan'],
+            ]);
 
-        dd('Image uploaded successfully: ' . $fileName);
+        return redirect()->route('selesai');
+    }
+
+    public function selesai(Request $request){
+        $request->session()->forget('data');
+
+        return view('user.selesai');
+    }
+
+    public function test(Request $request){
+        // dd($request->all());
+        // dd(isset($request->surat_kuasa));
     }
 }

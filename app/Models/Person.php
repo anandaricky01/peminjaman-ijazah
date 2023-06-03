@@ -12,6 +12,7 @@ class Person extends Model
     protected $table = 'persons';
     protected $fillable = [
         'nama_peminjam',
+        'student_id',
         'no_telp',
         'hubungan',
         'tgl_pinjam',
@@ -19,11 +20,13 @@ class Person extends Model
         'image',
         'status',
         'ket',
+        'keperluan',
+        'surat_kuasa'
     ];
     protected $primarykey = 'id';
 
     public function student()
     {
-        return $this->hasOne(Student::class, 'id', 'id');
+        return $this->belongsTo(Student::class);
     }
 }

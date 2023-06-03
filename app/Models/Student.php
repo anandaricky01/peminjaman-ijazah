@@ -16,14 +16,23 @@ class Student extends Model
         'nama',
         'id_fakultas',
         'id_prodi',
-        'id_person',
+        // 'id_person',
         'gender',
         'alamat',
     ];
 
+    public function scopeFilterNim($query, array $searchTerm)
+    {
+        $query->when($searchTerm['search'] ?? false, function ($query, $searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('nim', '=', $searchTerm);
+            });
+        });
+    }
+
     public function person()
     {
-        return $this->belongsTo(Person::class, 'id_person', 'id');
+        return $this->hasOne(Person::class);
     }
 
     public function fakultas()
@@ -34,6 +43,10 @@ class Student extends Model
     public function prodi()
     {
         return $this->belongsTo(Prodi::class, 'id_prodi', 'id');
+    }
+
+    public function ijazah(){
+        return $this->hasOne(Ijazah::class);
     }
 }
 

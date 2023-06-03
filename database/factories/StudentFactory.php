@@ -29,7 +29,7 @@ class StudentFactory extends Factory
             'gender' => Arr::random(['L', 'P']),
             'id_fakultas' => mt_rand(1,20),
             'id_prodi' => mt_rand(1,20),
-            'id_person' => $this->faker->unique()->numberBetween($min = 1, $max = 20),
+            // 'id_person' => $this->faker->unique()->numberBetween($min = 1, $max = 20),
             'alamat' => $this -> faker->address()
         ];
     }

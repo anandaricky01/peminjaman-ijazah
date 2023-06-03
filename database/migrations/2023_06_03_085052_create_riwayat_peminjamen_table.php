@@ -13,18 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('persons', function (Blueprint $table) {
+        Schema::create('riwayat_peminjamen', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
+            $table->string('nama_mahasiswa');
+            $table->string('nim');
+            $table->string('no_ijazah');
             $table->string('nama_peminjam', 150);
             $table->string('no_telp', 50);
             $table->string('hubungan', 50);
             $table->date('tgl_pinjam')->nullable();
             $table->date('tgl_kembali')->nullable();
-            $table->string('image', 255)->nullable();
-            $table->string('status', 50)->nullable();
             $table->string('ket', 250)->nullable();
+            $table->string('keperluan', 250)->nullable();
             $table->boolean('surat_kuasa')->nullable();
+            $table->enum('status', ['Tervalidasi', 'Pending', 'Tidak Tervalidasi']);
             $table->timestamps();
         });
     }
@@ -36,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('persons');
+        Schema::dropIfExists('riwayat_peminjamen');
     }
 };

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->char('nim')->length(20)->unique();
             $table->string('nama', 150);
-            $table->bigInteger('id_person')->unsigned()->index();
-            $table->foreign('id_person')->references('id')->on('persons')->onDelete('cascade');
+            // $table->bigInteger('id_person')->unsigned()->index();
+            // $table->foreign('id_person')->references('id')->on('persons')->onDelete('cascade');
             $table->bigInteger('id_fakultas')->unsigned()->index();
             $table->foreign('id_fakultas')->references('id')->on('fakultas')->onDelete('cascade');
             $table->bigInteger('id_prodi')->unsigned()->index();

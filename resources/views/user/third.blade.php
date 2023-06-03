@@ -55,7 +55,7 @@
                             </div>
                         </div> --}}
 
-                        <form method="POST" action="{{ route('webcam.capture') }}">
+                        <form method="POST" action="{{ route('thirdStepPost') }}">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">

@@ -17,7 +17,7 @@
 	</head>
 	<body>
 		<div class="wrapper">
-            <form action="/third" method="POST" id="wizard">
+            <form action="{{ route('secondStepPost') }}" method="POST" id="wizard">
 				@csrf
 				<!-- SECTION 2 -->
                 <h2></h2>
@@ -42,6 +42,11 @@
 									<input type="text" placeholder="Nomor Telepon" class="form-control" name="no_telp">
 								</div>
 							</div>
+                            <select class="form-select" name="keperluan" aria-label="Default select example" style="margin-bottom: 10px">
+                                <option selected>Keperluan</option>
+                                <option value="pengambilan">Pengambilan</option>
+                                <option value="peminjaman">Peminjaman</option>
+                              </select>
 							<div class="row">
 								<div class="col">
 									<div class="form-check">
@@ -49,7 +54,7 @@
 										<label class="form-check-label" for="yang_bersangkutan">
 											Yang Bersangkutan
 										</label>
-									  </div>									  
+									  </div>
 								</div>
 								<div class="col">
 									<div class="form-check">
@@ -60,37 +65,51 @@
 									  </div>
 								</div>
 							</div>
-							{{-- <div class="form-row">
-								<div class="select">
-									<div class="form-holder">
-										<div class="select-control">Hubungan</div>
-										<i class="zmdi zmdi-caret-down"></i>
-									</div>
-									<ul class="dropdown">
-										<li rel="Anggota Keluarga / Teman">Anggota Keluarga / Teman</li>
-										<li rel="Yang bersangkutan">Yang bersangkutan</li>
-									</ul>
-								</div>
-								<div class="form-holder"></div>
-							</div> --}}
 							<br>
+                            <div class="form-check mb-1">
+                            Format Surat Kuasa bisa diunduh pada <a href="#">Link Ini</a>
+                            </div>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" name="surat_kuasa" id="surat_kuasa">
 								<label class="form-check-label" for="surat_kuasa">
 								  Sudah melampirkan Surat Kuasa?
 								</label>
-							  </div>
-							{{-- <div class="mt-24">
-								<label>
-									<input type="checkbox" ><a href="#">Sudah melampirkan surat kuasa?</a>
-									<span class="checkmark"></span>
-								</label>
-							</div> --}}
+							</div>
+
+                            {{-- javascript untuk radio button hubungan dan checkbox surat kuasa --}}
+                            <script>
+                                // Mendapatkan referensi elemen radio button dan checkbox
+                                var radio = document.getElementsByName("hubungan");
+                                var checkbox = document.getElementById("surat_kuasa");
+
+                                // Menambahkan event listener pada setiap radio button
+                                for (var i = 0; i < radio.length; i++) {
+                                  radio[i].addEventListener("change", function() {
+                                    // Memeriksa apakah radio button "keluarga_teman" tidak terpilih
+                                    if (this.value !== "Anggota Keluarga/Teman") {
+                                      // Menonaktifkan checkbox jika radio button tidak terpilih
+                                      checkbox.disabled = true;
+                                    } else {
+                                      // Mengaktifkan checkbox jika radio button terpilih
+                                      checkbox.disabled = false;
+                                    }
+                                  });
+                                }
+
+                                // Menambahkan event listener pada radio button "yang_bersangkutan"
+                                document.getElementById("yang_bersangkutan").addEventListener("change", function() {
+                                  // Mengubah status checkbox menjadi tidak tercentang saat radio button diaktifkan
+                                  if (this.checked) {
+                                    checkbox.checked = false;
+                                  }
+                                });
+                            </script>
+
 							<br>
 							<style>
 								.btn-primary {background-color:#453e79}
 								.btn-primary:hover {background-color: #161942}
-								.next-step 
+								.next-step
 									{padding: 15px;
 									border-radius: 7px;
 									cursor: pointer;}
