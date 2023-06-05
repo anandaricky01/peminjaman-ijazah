@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Peminjaman Ijazah | Universitas Brawijaya</title>
+    <title>Peminjaman & Pengambilan Ijazah | Universitas Brawijaya</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- MATERIAL DESIGN ICONIC FONT -->
@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-content">
                         <div class="form-header">
-                            <h3>PEMINJAMAN IJAZAH</h3>
+                            <h3>PEMINJAMAN & PENGAMBILAN IJAZAH</h3>
                         </div>
                         <p>Input Data Ijazah</p>
                         @if (session()->has('danger'))
@@ -44,7 +44,10 @@
                         <div class="form-row">
                             <div class="form-holder w-100">
                                 <input type="text" placeholder="Masukkan NIM" name="search" class="form-control"
-                                    value="{{ request('search') }}">
+                                    value="{{ request('search') }}" @error('nama') style="border-color: red;" @enderror>
+                                    @error('nim')
+                                        <label for="">{{ $message }}</label>
+                                    @enderror
                             </div>
                         </div>
         </form>
@@ -56,7 +59,7 @@
             <input type="hidden" name="nim" value="{{ $studentData->nim ?? '' }}">
             <div class="form-row">
                 <div class="form-holder w-100">
-                        <input type="text" placeholder="Nomor Ijazah" class="form-control" @disabled(true)
+                        <input type="text" placeholder="Nomor Ijazah" class="form-control @error('no_ijazah') is-invalid @enderror" @disabled(true)
                             value="{{ $studentData->ijazah->no_ijazah ?? 'Nomor Ijazah Tidak/Belum Tersedia' }}" name="no_ijazah">
                 </div>
                 {{-- hidden input untuk kirim data --}}
@@ -64,14 +67,14 @@
             </div>
             <div class="form-row">
                 <div class="form-holder">
-                    <input type="text" placeholder="Nama" class="form-control" @disabled(true)
+                    <input type="text" placeholder="Nama" class="form-control"  @disabled(true)
                         value="{{ $studentData->nama ?? '' }}" name="nama">
                 </div>
                 {{-- hidden input untuk kirim data --}}
                 <input type="hidden" value="{{ $studentData->nama ?? '' }}" name="nama">
 
                 <div class="form-holder">
-                    <input type="text" placeholder="Alamat" class="form-control" @disabled(true)
+                    <input type="text" placeholder="Alamat" class="form-control @error('alamat') is-invalid @enderror" @disabled(true)
                         value="{{ $studentData->alamat ?? '' }}" name="alamat">
                 </div>
                 <input type="hidden" value="{{ $studentData->alamat ?? '' }}" name="alamat">
@@ -79,13 +82,13 @@
 
             <div class="form-row">
                 <div class="form-holder">
-                    <input type="text" placeholder="Fakultas" class="form-control" @disabled(true)
+                    <input type="text" placeholder="Fakultas" class="form-control @error('fakultas') is-invalid @enderror" @disabled(true)
                         value="{{ $studentData->fakultas->fakultas ?? '' }}" name="fakultas">
                 </div>
                 <input type="hidden" value="{{ $studentData->fakultas->fakultas ?? '' }}" name="fakultas">
 
                 <div class="form-holder">
-                    <input type="text" placeholder="Program Studi" class="form-control" @disabled(true)
+                    <input type="text" placeholder="Program Studi" class="form-control @error('prodi') is-invalid @enderror" @disabled(true)
                         value="{{ $studentData->prodi->prodi ?? '' }}" name="prodi">
                 </div>
                 <input type="hidden" value="{{ $studentData->prodi->prodi ?? '' }}" name="prodi">
@@ -94,7 +97,8 @@
             <br>
 
             <div class="form-group">
-                <button class="search-nim btn btn-primary" type="submit" {{ $studentData->ijazah->no_ijazah ?? 'disabled' }}>Selanjutnya</button>
+                <button class="search-nim btn btn-primary" type="submit">Selanjutnya</button>
+                {{-- <button class="search-nim btn btn-primary" type="submit" {{ $studentData->ijazah->no_ijazah ?? 'disabled' }}>Selanjutnya</button> --}}
                 {{-- <a class="next-step btn btn-primary font-size-h6" href="second">Selanjutnya</a> --}}
             </div>
     </div>

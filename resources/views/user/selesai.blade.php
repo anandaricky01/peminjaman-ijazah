@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Peminjaman Ijazah | Universitas Brawijaya</title>
+    <title>Peminjaman & Pengambilan Ijazah | Universitas Brawijaya</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- MATERIAL DESIGN ICONIC FONT -->
@@ -18,20 +18,43 @@
 
 <body>
     <div class="wrapper">
-        <center>
-            Data telah selesai diunggah
-            <br>
-            silahkan tunggu konfirmasi admin
-            <br>
-            jika belum mendapatkan balasan admin dalam 3 hari
-            <br>
-            silahkan hubungi kontak di bawah ini
-            <br>
-            081234567890
-            <br>
-            <a href="{{ route('home') }}" class="search-nim btn btn-primary">Kembali</a>
-        </center>
+        <form action="{{ route('home') }}" method="" id="wizard">
+            <h2></h2>
+            <section>
+                <div class="inner">
+            <!-- SECTION 1 -->
+                    <div class="image-holder">
+                        <img src="images/BRONE.png" alt="">
+                    </div>
+                    <div class="form-content">
+                        <div class="form-header">
+                            <h3>PEMINJAMAN & PENGAMBILAN IJAZAH</h3>
+                        </div>
+                        <center style="font-size: 22px">
+                            Data telah selesai diunggah
+                            <br>
+                            silahkan tunggu konfirmasi admin
+                            <br>
+                            jika belum mendapatkan balasan admin dalam 3 hari
+                            <br>
+                            silahkan hubungi kontak di bawah ini
+                            <br>
+                            081234567890
+                            <br>
+                            <br>
+                            <a href="{{ route('home') }}" style="padding: 10px; border-radius:7px;" class="btn btn-primary">Selesai</a>
+                        </center>
+
+                        {{-- <div class="form-holder"> --}}
+                            {{-- <button class="search-nim btn btn-primary" type="submit">Cek NIM</button> --}}
+                        {{-- </div> --}}
+        </form>
+
     </div>
+    </div>
+    </form>
+    </div>
+    </section>
 
     <!-- JQUERY -->
     <script src="js/jquery-3.3.1.min.js"></script>

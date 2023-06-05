@@ -29,7 +29,7 @@
 						</div>
 						<div class="form-content">
 							<div class="form-header">
-								<h3>PEMINJAMAN IJAZAH</h3>
+								<h3>PEMINJAMAN & PENGAMBILAN IJAZAH</h3>
 							</div>
 							<p>Upload Data Peminjaman</p>
 							<div class="form-row">
