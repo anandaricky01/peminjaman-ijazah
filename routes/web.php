@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\IjazahController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -75,6 +76,15 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function(){
         ->name('edit', 'dashboard.ijazah.edit')
         ->name('update', 'dashboard.ijazah.update')
         ->name('destroy', 'dashboard.ijazah.delete');
+
+    Route::resource('/employee', EmployeeController::class)
+        ->name('index', 'dashboard.employee.index')
+        ->name('create', 'dashboard.employee.create')
+        ->name('store', 'dashboard.employee.store')
+        ->name('edit', 'dashboard.employee.edit')
+        ->name('update', 'dashboard.employee.update')
+        ->name('destroy', 'dashboard.employee.delete')
+        ->except('show');
 
     Route::get('/riwayat-peminjaman', [RiwayatPeminjamanController::class, 'index'])->name('riwayat-peminjaman');
     Route::get('/riwayat-peminjaman/{id}', [RiwayatPeminjamanController::class, 'show'])->name('riwayat-peminjaman.show');

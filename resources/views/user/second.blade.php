@@ -20,12 +20,12 @@
             <form action="{{ route('secondStepPost') }}" method="POST" id="wizard">
 				@csrf
 				<!-- SECTION 2 -->
-                <h2></h2>
+                {{-- <h2></h2> --}}
 
                 <section>
                     <div class="inner">
 						<div class="image-holder">
-							<img src="images/BRONE.png" alt="">
+							<img src="images/BRONE.png" alt="" height="500px">
 						</div>
 						<div class="form-content">
 							<div class="form-header">

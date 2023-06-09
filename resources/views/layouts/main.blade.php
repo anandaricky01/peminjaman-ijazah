@@ -172,10 +172,17 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ route('riwayat-peminjaman') }}">
               <i class="icon-grid menu-icon"></i>
-              <i data-feather="clock"></i>
               <span class="menu-title">Riwayat Peminjaman</span>
             </a>
           </li>
+          @if (auth()->user()->role == 'superadmin')
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('dashboard.employee.index') }}">
+                <i class="icon-grid menu-icon"></i>
+                <span class="menu-title">Employee</span>
+                </a>
+            </li>
+          @endif
         </ul>
       </nav>
       <!-- partial -->

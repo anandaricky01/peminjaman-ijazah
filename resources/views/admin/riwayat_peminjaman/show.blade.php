@@ -66,7 +66,7 @@
                             <textarea class="form-control" id="exampleTextarea1" rows="4" name="ket" disabled>{{ $riwayat_peminjaman->ket }}</textarea>
                         </div>
                         {{-- <button type="submit" class="btn btn-primary mr-2" href="student">Update</button> --}}
-                        <button class="btn btn-light" href="{{ route('riwayat-peminjaman') }}">Kembali</button>
+                        <a class="btn btn-light" href="{{ route('riwayat-peminjaman') }}">Kembali</a>
                     </form>
                 </div>
             </div>

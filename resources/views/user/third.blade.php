@@ -31,11 +31,11 @@
 <body>
     <div class="wrapper">
         <!-- SECTION 3 -->
-        <h2></h2>
+        {{-- <h2></h2> --}}
         <section>
             <div class="inner">
                 <div class="image-holder">
-                    <img src="images/BRONE.png" alt="">
+                    <img src="images/BRONE.png" alt="" height="500px">
                 </div>
                 <div class="form-content">
                     <div class="form-header">

@@ -18,5 +18,6 @@ class Employee extends Model
         'nama_pegawai',
         'email',
         'password',
+        'role'
     ];
 }
