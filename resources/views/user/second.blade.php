@@ -31,7 +31,7 @@
 							<div class="form-header">
 								<h3>PEMINJAMAN & PENGAMBILAN IJAZAH</h3>
 							</div>
-							<p>Upload Data Peminjaman</p>
+							<p>Upload Data Peminjaman/Pengambilan</p>
 							<div class="form-row">
 								<div class="form-holder w-100">
 									<input type="text" placeholder="Nama" class="form-control" name="nama_peminjam">

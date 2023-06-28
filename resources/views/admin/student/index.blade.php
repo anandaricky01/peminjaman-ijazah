@@ -10,7 +10,7 @@
                           <div class="card-body">
                             <h3 class="card-title">Daftar Mahasiswa</h3>
                             <button id="export" class="btn btn-primary" onclick="exportTableToCSV('peminjaman-ijazah.csv')">
-                                <i data-feather="printer" class="fas fa-plus"></i>
+                                <i data-feather="table" class="fas fa-plus"></i> Excel
                             </button>
                             <a href="{{ route('dashboard.student.create') }}" id="plus" class="btn btn-primary">
                                 <i data-feather="plus" class="fas fa-plus"></i>

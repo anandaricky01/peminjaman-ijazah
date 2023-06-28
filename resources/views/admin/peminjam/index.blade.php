@@ -8,13 +8,10 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                           <div class="card-body">
-                            <h3 class="card-title">Daftar Peminjam</h3>
+                            <h3 class="card-title">Daftar Peminjam-Pengambil</h3>
                             <button id="export" class="btn btn-primary" onclick="exportTableToCSV('peminjaman-ijazah.csv')">
-                                <i data-feather="printer" class="fas fa-plus"></i>
+                                <i data-feather="table" class="fas fa-plus"></i> Excel
                             </button>
-                            {{-- <a href="/student-add" id="plus" class="btn btn-primary">
-                                <i class="fas fa-plus"></i>
-                            </a> --}}
                             <div class="table-responsive">
                                 @if(Session::has('status'))
                                 <div class="alert alert-success" role="alert">
@@ -25,9 +22,9 @@
                                 <thead>
                                   <tr>
                                     <th>No</th>
-                                    <th>Nama Peminjam</th>
+                                    <th>Nama</th>
                                     <th>Status</th>
-                                    <th>Tgl Pinjam</th>
+                                    <th>Tgl Pinjam-Ambil</th>
                                     <th>Tgl Kembali</th>
                                     <th>Aksi</th>
                                   </tr>

@@ -52,7 +52,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('authenticate');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function(){
-    Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/index', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     // control source person
     Route::resource('/person', PersonController::class)

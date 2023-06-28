@@ -37,7 +37,7 @@
         <div class="col-md-6 grid-margin stretch-card">
             <div class="card card-white">
                 <div class="card-people mt-0">
-                    <img src="images/dashboard/photo.svg" alt="people">
+                    <img src="{{ asset('images/dashboard/photo.svg') }}" alt="people">
                     <div class="weather-info">
                         <div class="d-flex">
                             <div id="main">
@@ -65,7 +65,7 @@
                 <div class="col-md-6 mb-4 stretch-card transparent">
                     <div class="card card-tale">
                         <div class="card-body">
-                            <p class="mb-4">Jumlah Peminjam</p>
+                            <p class="mb-4">Jumlah Peminjam-Pengambil</p>
                             <h1>{{ $jumlah_peminjam }}</h1>
                         </div>
                     </div>
@@ -103,9 +103,9 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <p class="card-title mb-0">Daftar Peminjam</p>
+                    <p class="card-title mb-0">Daftar Peminjam-Pengambil</p>
                     <button id="export" class="btn btn-primary" onclick="exportTableToCSV('peminjaman-ijazah.csv')">
-                        <i data-feather="printer" class="fas fa-plus"></i>
+                        <i data-feather="table" class="fas fa-plus"></i> Excel
                     </button>
                     {{-- <a href="student-add" id="plus" class="btn btn-primary">
                         <i class="fas fa-plus"></i>
@@ -120,10 +120,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Id Peminjam</th>
                                     <th>Nama</th>
                                     <th>Status</th>
-                                    <th>Tgl Pinjam</th>
+                                    <th>Tgl Pinjam-Ambil</th>
                                     <th>Tgl Kembali</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -132,7 +131,6 @@
                                 @foreach ($peminjam as $data)
                                     <tr>
                                         <td class="font-weight-bold">{{ $loop->iteration }}</td>
-                                        <td class="font-weight-bold">{{ $data->id }}</td>
                                         <td class="font-weight-bold">{{ $data->nama_peminjam }}</td>
                                         <td class="font-weight-light">
                                             @if ($data->status == 'Tervalidasi')
@@ -148,14 +146,14 @@
                                         <td>
                                             <a href="/student/{{ $data->id }}/edit" id="edit"
                                                 class="btn btn-warning">
-                                                <i class="fas fa-edit"></i>
+                                                <i data-feather="eye" class="text-white"></i>
                                             </a>
                                             <form action="/student/{{ $data->id }}" method="post" class="d-inline">
                                                 @method('delete')
                                                 @csrf
                                                 <button class="btn btn-danger" id="hapus"
                                                     onclick="return confirm('Apakah anda ingin menghapus data ini?')">
-                                                    <i class="fas fa-trash"></i></button>
+                                                    <i data-feather="trash-2" class="text-white"></i></button></button>
                                             </form>
                                         </td>
                                     </tr>

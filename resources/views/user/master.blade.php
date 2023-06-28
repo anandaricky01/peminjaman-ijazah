@@ -60,7 +60,7 @@
             <div class="form-row">
                 <div class="form-holder w-100">
                         <input type="text" placeholder="Nomor Ijazah" class="form-control @error('no_ijazah') is-invalid @enderror" @disabled(true)
-                            value="{{ $studentData->ijazah->no_ijazah ?? 'Nomor Ijazah Tidak/Belum Tersedia' }}" name="no_ijazah">
+                            value="{{ $studentData->ijazah->no_ijazah ?? '' }}" name="no_ijazah">
                 </div>
                 {{-- hidden input untuk kirim data --}}
                 <input type="hidden" value="{{ $studentData->ijazah->no_ijazah ?? '' }}" name="no_ijazah">

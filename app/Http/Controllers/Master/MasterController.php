@@ -15,19 +15,24 @@ class MasterController extends Controller
     public function index(Request $request)
     {
         $studentData = '';
-        try {
-            //code...
-            if(isset($request->search)){
-                $studentData = Student::filterNim($request->only('search'))->get()[0];
-            }
-        } catch (\Throwable $th) {
-            //throw $th;
-            return redirect()->route('home')->with('danger', 'Data Mahasiswa Tidak ditemukan!');
-        }
 
-        return view('user.master', [
-            'studentData' => $studentData
-        ]);
+        try {
+
+            if(isset($request->search)){
+                $studentData = Student::where('nim', $request->search)->get()[0];
+                if(Ijazah::where('student_id', $studentData->id)->count() < 1){
+                    return redirect()->route('home')->with('danger', 'Ijazah sedang tidak tersedia! Silahkan hubungi admin!');
+                }
+
+            }
+
+            return view('user.master', [
+                'studentData' => $studentData
+            ]);
+
+        } catch (\Throwable $th) {
+            return redirect()->route('home')->with('danger', 'Data Mahasiswa Tidak tercatat!');
+        }
     }
 
     public function firstStepPost(Request $request){
