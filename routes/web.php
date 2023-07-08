@@ -61,6 +61,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function(){
         ->name('update', 'dashboard.person.update')
         ->name('destroy', 'dashboard.person.delete');
 
+    Route::get('/student/import', [StudentController::class, 'import_page'])->name('import.student');
+    Route::post('/student/import', [StudentController::class, 'import'])->name('importPost.student');
     Route::resource('/student', StudentController::class)
         ->name('index', 'dashboard.student.index')
         ->name('create', 'dashboard.student.create')

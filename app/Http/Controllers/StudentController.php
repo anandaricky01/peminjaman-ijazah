@@ -11,6 +11,8 @@ use App\Models\Student;
 use App\Models\Person;
 use App\Models\Prodi;
 use Exception;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\StudentsImport;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 
@@ -101,6 +103,22 @@ class StudentController extends Controller
             return redirect()->route('dashboard.ijazah.index')->with('Danger', 'Terjadi kesalahan dalam proses penghapusan');
         }
     }
+
+    public function import_page(){
+        return view('admin.student.import');
+    }
+
+    public function import(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        $file = $request->file('file');
+        Excel::import(new StudentsImport, $file);
+
+        return redirect()->back()->with('success', 'Data imported successfully.');
+    }
+
 }
 
 // admin

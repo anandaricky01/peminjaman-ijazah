@@ -16,7 +16,6 @@ class Student extends Model
         'nama',
         'id_fakultas',
         'id_prodi',
-        // 'id_person',
         'gender',
         'alamat',
     ];

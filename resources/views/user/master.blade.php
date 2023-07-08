@@ -95,7 +95,7 @@
             </div>
 
             <br>
-
+            Tatacara pengambilan ijazah pada website dapat dibaca pada <a href="#">Link Ini</a>
             <div class="form-group">
                 <button class="search-nim btn btn-primary" type="submit">Selanjutnya</button>
                 {{-- <button class="search-nim btn btn-primary" type="submit" {{ $studentData->ijazah->no_ijazah ?? 'disabled' }}>Selanjutnya</button> --}}

@@ -12,8 +12,11 @@
                             <button id="export" class="btn btn-primary" onclick="exportTableToCSV('peminjaman-ijazah.csv')">
                                 <i data-feather="table" class="fas fa-plus"></i> Excel
                             </button>
+                            <a href="{{ route('import.student') }}" id="plus" class="btn btn-primary">
+                                <i data-feather="plus" class="fas fa-plus"></i> Import
+                            </a>
                             <a href="{{ route('dashboard.student.create') }}" id="plus" class="btn btn-primary">
-                                <i data-feather="plus" class="fas fa-plus"></i>
+                                <i data-feather="plus" class="fas fa-plus"></i> Manual
                             </a>
                             <div class="table-responsive">
                                 @if(Session::has('status'))
